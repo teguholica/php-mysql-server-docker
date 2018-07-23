@@ -1,0 +1,25 @@
+version: '3'
+services:
+  php:
+    build: ./php-apache
+    volumes:
+      - ./code:/var/www/html
+    ports:
+      - 8080:80
+    networks:
+      - code-network
+  db:
+    image: mariadb:10.3.8
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345
+    ports:
+      - 3306:3306
+    volumes:
+      - ./db:/var/lib/mysql
+    networks:
+      - code-network
+
+networks:
+  code-network:
+    driver: bridge
